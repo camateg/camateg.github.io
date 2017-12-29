@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-28T21:58:10-05:00</updated><id>http://localhost:4000/</id><title type="html">KB3TIX blog</title><subtitle>A small github site to share ideas...</subtitle><entry><title type="html">PCE/macplus with socat</title><link href="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html" rel="alternate" type="text/html" title="PCE/macplus with socat" /><published>2017-11-01T01:00:00-04:00</published><updated>2017-11-01T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">&lt;p&gt;I was able to compile tun support for &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt; Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://www.toughdev.com/content/2016/11/pcemacplus-the-ultimate-68k-classic-macintosh-emulator/&quot;&gt;original guide&lt;/a&gt; gave me another idea after I re-read it and I actually had a little bit more success with that. Although &lt;a href=&quot;https://github.com/freemed/tty0tty&quot;&gt;tty0tty&lt;/a&gt; relies on a Linux kernel module, another utility called “&lt;a href=&quot;http://www.dest-unreach.org/socat/doc/socat.html&quot;&gt;socat&lt;/a&gt;” runs on a wider range of platforms and is &lt;a href=&quot;http://brewformulas.org/Socat&quot;&gt;available through homebrew&lt;/a&gt; for OS X.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iMac:~ matt$ socat -d -d pty,raw,ignoreeof,echo=0,link=/tmp/modem1 pty,raw,ignoreeof,echo=0,link=/tmp/modem2  
+2017/11/22 18:56:55 socat[1708] N PTY is /dev/ttys007  
+2017/11/22 18:56:55 socat[1708] N PTY is /dev/ttys008  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The above basically creates a fake null modem cable as originally suggested. The “link” parameter allowed me to maintain some degree of consistency between calling socat; the ttys are allocated numbers at random, but you can link a filename to put in your .cfg.&lt;/p&gt;
+
+&lt;p&gt;I chose &lt;code class=&quot;highlighter-rouge&quot;&gt;/tmp&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev&lt;/code&gt; because even after disabling SIP on the Mac, I couldn’t easily write to &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev&lt;/code&gt;. On a side note, you’ll have to disable SIP eventually to write the pppd options in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc&lt;/code&gt; because apparently &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/ppp/options&lt;/code&gt; is hardcoded into pppd.&lt;/p&gt;
+
+&lt;p&gt;Here’s the snippet of my config when I configure the serial port:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;serial {  
+        port = 0
+
+        multichar = 1
+
+        driver = &quot;stdio:file=/tmp/modem1&quot;
+        #driver = &quot;ppp:if=tap0:host-ip=10.10.10.2:guest-ip=10.10.10.3&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In true form, I got ahead of myself and immediately tried to fire up FreePPP on Mac TCP. I ran pppd as described on the guide with the exception of the device name which is the second generated device from above, &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/ttys008&lt;/code&gt;. pppd gets angry if you specify a “device” file outside of &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev&lt;/code&gt;, so that’s necessary.&lt;/p&gt;
+
+&lt;p&gt;You can use the following commands in separate terminals to monitor the two sides of the “cable:”&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;lt; /tmp/modem1  
+cat &amp;lt; /tmp/modem2  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After I had introduced way too many variable into my “equation,” I stepped back and tried &lt;a href=&quot;http://www.dalverson.com/zterm/&quot;&gt;ZTerm&lt;/a&gt; on System 7 and &lt;a href=&quot;http://brewformulas.org/Minicom&quot;&gt;minicom on Mac OS X&lt;/a&gt; through the “cable”.&lt;/p&gt;
+
+&lt;p&gt;I chose minicom because it’s much more agnostic about allowing non-standard device names compared to something more GUI friendly and it’s also available on homebrew. I chose the modem port on System 7, which the .cfg pointed to &lt;code class=&quot;highlighter-rouge&quot;&gt;/tmp/modem1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;/tmp/modem2&lt;/code&gt; in minicom.&lt;/p&gt;
+
+&lt;p&gt;When I typed on the emulator I could see appropriate characters on minicom, but the reverse wasn’t true (I saw nothing on the Mac Plus). I had the cat commands running in two other terminals and they produced output as expected for the corresponding cable ends.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, someone can take this and run with it to make something usable. I hope it helps.&lt;/p&gt;
+
+&lt;h1 id=&quot;update&quot;&gt;Update&lt;/h1&gt;
+
+&lt;p&gt;I guess some time away from this little exercise was helpful. When I came back, I rethought my config file and wondered why I was using stdio. I guess it was just the first thing I tried and I stuck with it for no apparent reason.&lt;/p&gt;
+
+&lt;p&gt;I ended up substituting this config line for the serial section:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;driver = &quot;posix:file=/tmp/modem1&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This allowed me to invoke a comm terminal on the “Plus” and communicate as expected. I haven’t gotten pppd quite working yet. They begin to communicate and the Plus / FreePPP gives me a success message, but the connection times out before it’s fully established.&lt;/p&gt;
+
+&lt;p&gt;I’m thinking / hoping that there are some nuances between the original guide’s Linux pppd and OS X as well as the fact that I’m using a different approach. The following is some console output from pppd:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Thu Nov 23 23:45:05 2017 : ipcp: returning Configure-ACK
+Thu Nov 23 23:45:05 2017 : sent [IPCP ConfAck id=0xc &amp;lt;compress VJ 0f 01&amp;gt; &amp;lt;addr 192.168.2.245&amp;gt;]
+Thu Nov 23 23:45:08 2017 : sent [IPCP ConfReq id=0x1 &amp;lt;compress VJ 0f 01&amp;gt; &amp;lt;addr 192.168.2.244&amp;gt;]
+Thu Nov 23 23:45:08 2017 : rcvd [IPCP ConfReq id=0xd &amp;lt;compress VJ 0f 01&amp;gt; &amp;lt;addr 192.168.2.245&amp;gt;]
+Thu Nov 23 23:45:08 2017 : ipcp: returning Configure-ACK
+Thu Nov 23 23:45:08 2017 : sent [IPCP ConfAck id=0xd &amp;lt;compress VJ 0f 01&amp;gt; &amp;lt;addr 192.168.2.245&amp;gt;]
+Thu Nov 23 23:45:11 2017 : IPCP: timeout sending Config-Requests
+Thu Nov 23 23:45:11 2017 : sent [LCP TermReq id=0x2 &quot;No network protocols running&quot;]
+Thu Nov 23 23:45:11 2017 : Connection terminated.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If anyone would care to try, here are the steps, in order so far:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;call socat as described above&lt;/li&gt;
+  &lt;li&gt;note the second ttys device’s number&lt;/li&gt;
+  &lt;li&gt;start pce&lt;/li&gt;
+  &lt;li&gt;initiate the ppp connection on the emulated Mac&lt;/li&gt;
+  &lt;li&gt;initiate a yet to be determined pppd command on the OS X host that includes the tty generated from the socat output&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The last two items could be interchangeable or I might have them backwards, but the “fake success” message was kind of neat to see, even it was a lie.&lt;/p&gt;</content><author><name></name></author><summary type="html">I was able to compile tun support for pce-macplus Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.</summary></entry></feed>
