@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PCE/macplus and tuntap</title>
+  <meta name="description" content="I just found a 68K Mac emulator that I hadn’t heard of before called pce-macplus. It appealed to me because vMac doesn’t support serial interfaces or network...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/emu/mac/2017/10/31/pce-macplus-macosx-tun.html">
+  <link rel="alternate" type="application/rss+xml" title="KB3TIX blog" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">KB3TIX blog</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">PCE/macplus and tuntap</h1>
+    <p class="post-meta">
+      <time datetime="2017-10-31T01:00:00-04:00" itemprop="datePublished">
+        
+        Oct 31, 2017
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>I just found a 68K Mac emulator that I hadn’t heard of before called <a href="http://www.hampa.ch/pce/pce-macplus.html">pce-macplus</a>. It appealed to me because vMac doesn’t support serial interfaces or networking and also because Basilisk II doesn’t seem to be as actively maintained as it once was and I have some stability issues on OS X with it.</p>
+
+<p>The source code is very Linux-centric and not especially well documented, but I found <a href="http://www.toughdev.com/content/2016/11/pcemacplus-the-ultimate-68k-classic-macintosh-emulator/">an excellent blog post</a> which helped immensely with initial compilation and initial configuration, so thanks for that.</p>
+
+<p>As I said, I was particularly interested in network support, which doesn’t seem to have been successfully accomplished on Mac OS X yet for pce, so naturally I had to try. Admittedly, I don’t have much porting or compiled language development since the early 2000s, but hopefully some of it will come back.</p>
+
+<p>I’ve been able to compile tun support (on the surface) into pce-macplus on OS X, but haven’t successfully gotten the ppp driver to activate or made a connection. I hope that posting this will help to help propel someone more capable in that direction.</p>
+
+<p>Networking in pce-macplus is accomplished through a tun/tap interface. Mac OS X supports a sort of tun (but no tap), but is likely very different programatically. The source code for pce is clearly written with Linux in mind (i.e. direct references to the Linux kernel source with no error checking), so I figured I’d try to find something more universal in terms of handling tun:</p>
+
+<p><code class="highlighter-rouge">src/lib/tun.c:</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ...
+    #include &lt;linux/if.h&gt;
+    #include &lt;linux/if_tun.h&gt;
+    ...
+</code></pre></div></div>
+
+<p>There is / was a tuntap package for OS X, tuntaposx, but I wasn’t sure if it was still actively maintained or how dependencies would be handled, so I ended up using a Homebrew repackaging of tuntap.</p>
+
+<p>The tuntap package in particular had be relegated to Homebrew-cask so I used the following commands related to homebrew:
+Install homebrew (you probably already have):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre></div></div>
+
+<p>Install homebrew-cask:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew tap caskroom/cask  
+</code></pre></div></div>
+
+<p>Install dependencies:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install sdl libpcap  
+brew cask install tuntap  
+</code></pre></div></div>
+
+<p>We need SDL for the UI because XQuartz is slow and clunky, libpcap (I think; I have to verify that this is necessary) and tuntap.</p>
+
+<p>The next issue that most people have encountered is hardcoded reference to the Linux kernel sources, such as <code class="highlighter-rouge">src/lib/tun.c</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ...
+    #include &lt;linux/if.h&gt;
+    #include &lt;linux/if_tun.h&gt;
+    ...
+</code></pre></div></div>
+
+<p>This obviously doesn’t apply to everyone, particularly to me on a Mac. I ended up putting the following early in <code class="highlighter-rouge">tun.c</code>, more details to come on that later:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#ifdef __APPLE__
+    #ifdef TARGET_OS_MAC
+        #include &lt;net/if.h&gt;
+        #include &lt;net/if_types.h&gt;
+        #include &lt;net/bpf.h&gt;
+
+        #define TUNSETIFF BIOCSETIF
+        #define IFF_TAP IFT_PKTAP
+        #define IFF_TUN APPLE_IF_FAM_TUN
+        #define IFF_NO_PI 0x1000
+    #endif
+#else
+    #include &lt;linux/if.h&gt;
+    #include &lt;linux/if_tun.h&gt;
+#endif
+</code></pre></div></div>
+
+<p>Basically, this tries to account for the possibility of being on a Mac / Darwin system without breaking the initial intent of including <code class="highlighter-rouge">linux/if.h</code> and <code class="highlighter-rouge">linux/if_tun.h</code>.</p>
+
+<p>My reference to <code class="highlighter-rouge">__APPLE__</code> appears to be archaic, but it gets the job done temporarily. If you’d like to improve this, <a href="https://developer.apple.com/library/content/documentation/Porting/Conceptual/PortingUnix/compiling/compiling.html">this might be a good reference</a>.</p>
+
+<p>The <code class="highlighter-rouge">#define</code> statements are a part that I’m not necessarily sure about. I did my best to determine a one-to-one relationship between Linux and *BSD macros related to tunneling and packet filtering. Take them with a grain of salt. There may also be stray references to hardcoded Linux device names in the pce source code, but I haven’t gotten that far yet.</p>
+
+<p>My configure command ended up being pretty simple, which was a pleasant surprise. Initially, I specified some additional CFLAGS and LDFLAGS because of the third-party libpcap, but I left them out by accident and things worked anyways. This is what led me to question the need for installing libpcap, but it’s late and I’ll confirm later. Clearly something made me want to install libpcap?</p>
+
+<p>These are the compiler flags I had added that didn’t seem to matter. They will be empty by default. I actually noticed that additional carriage returns might have been introduced into generated Makefile.inc when I specified these in the configure command, so these are just left as a reference:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export CFLAGS= -I/usr/local/opt/libpcap/include  
+export LDFLAGS= -L/usr/local/opt/libpcap/lib  
+</code></pre></div></div>
+
+<p>Configure your build parameters:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --with-sdl -enable-char-ppp --enable-tun -enable-char-tcp --enable-char-slip --enable-char-pty --enable-char-posix --enable-char-termios
+</code></pre></div></div>
+
+<p>This results in the following configuration:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pce 20171112-4c256b0-mod is now configured:  
+  CC:                      gcc -g -O2
+  LD:                      gcc 
+
+  prefix:                  /usr/local
+
+  Emulators built:         atarist cpm80 ibmpc macplus rc759 sim405 sim6502 simarm sims32
+  Emulators not built:    
+  ROMs built:             
+  ROMs not built:          ibmpc macplus
+  Terminals built:         null x11 sdl
+  Terminals not built:    
+  Char drivers built:      null stdio posix ppp pty slip tcp termios
+  Char drivers not built:  wincom
+  Sound drivers built:     null wav sdl
+  Sound drivers not built: oss
+  Enabled options:         tun
+  Disabled options:        readline
+</code></pre></div></div>
+
+<p>I did a make &amp;&amp; make install and fired up a machine. Here is the config file I used, many thanks to the author of the post above:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="p">=</span> <span class="s2">"-."</span>
+
+
+<span class="n">memtest</span> <span class="p">=</span> <span class="m">0</span>
+
+
+<span class="nf">system</span> <span class="p">{</span>  
+    <span class="k">model</span><span class="p">=</span><span class="s2">"mac-plus"</span>
+<span class="p">}</span>
+
+<span class="n">cpu</span> <span class="p">{</span>  
+    <span class="k">model</span> <span class="p">=</span> <span class="s2">"68000"</span>
+<span class="p">}</span>
+
+
+<span class="n">ram</span> <span class="p">{</span>  
+    <span class="n">address</span> <span class="p">=</span> <span class="m">0</span>
+    <span class="n">size</span> <span class="p">=</span> <span class="m">4096</span><span class="n">K</span>
+    <span class="n">default</span> <span class="p">=</span> <span class="m">0x00</span>
+<span class="p">}</span>
+
+<span class="n">rom</span> <span class="p">{</span>  
+    <span class="n">file</span> <span class="p">=</span> <span class="s2">"plus.rom"</span>
+    <span class="n">address</span> <span class="p">=</span> <span class="m">0x400000</span>
+
+    <span class="n">size</span> <span class="p">=</span> <span class="p">(</span><span class="nf">system</span><span class="p">.</span><span class="k">model</span> <span class="p">==</span> <span class="s2">"mac-classic"</span><span class="p">)</span> <span class="p">?</span> <span class="m">512</span><span class="n">K</span> <span class="p">:</span> <span class="m">256</span><span class="n">K</span>
+
+    <span class="n">default</span> <span class="p">=</span> <span class="m">0xff</span>
+<span class="p">}</span>
+
+
+<span class="n">terminal</span> <span class="p">{</span>  
+    <span class="n">driver</span> <span class="p">=</span> <span class="s2">"sdl"</span>
+
+    <span class="n">scale</span> <span class="p">=</span> <span class="m">1</span>
+
+    <span class="n">aspect_x</span> <span class="p">=</span> <span class="m">3</span>
+    <span class="n">aspect_y</span> <span class="p">=</span> <span class="m">2</span>
+
+    <span class="n">border</span> <span class="p">=</span> <span class="m">0</span>
+
+    <span class="n">fullscreen</span> <span class="p">=</span> <span class="m">0</span>
+
+    <span class="n">mouse_mul_x</span> <span class="p">=</span> <span class="m">1</span>
+    <span class="n">mouse_div_x</span> <span class="p">=</span> <span class="m">1</span>
+    <span class="n">mouse_mul_y</span> <span class="p">=</span> <span class="m">1</span>
+    <span class="n">mouse_div_y</span> <span class="p">=</span> <span class="m">1</span>
+<span class="p">}</span>
+
+<span class="n">sound</span> <span class="p">{</span>  
+    <span class="n">lowpass</span> <span class="p">=</span> <span class="m">8000</span>
+
+    <span class="n">driver</span> <span class="p">=</span> <span class="s2">"sdl:wav=speaker.wav:lowpass=0:wavfilter=0"</span>
+<span class="p">}</span>
+
+
+<span class="n">keyboard</span> <span class="p">{</span>  
+    <span class="k">model</span> <span class="p">=</span> <span class="m">0</span>
+    <span class="n">intl</span>  <span class="p">=</span> <span class="m">0</span>
+
+    <span class="n">keypad_motion</span> <span class="p">=</span> <span class="m">0</span>
+<span class="p">}</span>
+
+
+<span class="n">adb</span> <span class="p">{</span>  
+    <span class="n">mouse</span> <span class="p">=</span> <span class="nb">true</span>
+    <span class="n">keyboard</span> <span class="p">=</span> <span class="nb">true</span>
+    <span class="n">keypad_motion</span> <span class="p">=</span> <span class="nb">false</span>
+<span class="p">}</span>
+
+
+<span class="n">rtc</span> <span class="p">{</span>  
+    <span class="n">file</span> <span class="p">=</span> <span class="s2">"pram-mac-classic.dat"</span>
+    <span class="n">realtime</span> <span class="p">=</span> <span class="m">1</span>
+<span class="p">}</span>
+
+
+<span class="n">cfg</span><span class="p">.</span><span class="n">sony</span> <span class="p">=</span> <span class="m">1</span>  
+<span class="n">sony</span> <span class="p">{</span>  
+    <span class="n">insert_delay</span> <span class="p">=</span> <span class="m">1</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">cfg</span><span class="p">.</span><span class="n">sony</span><span class="p">)</span> <span class="p">{</span>  
+    <span class="n">rom</span> <span class="p">{</span>
+        <span class="n">file</span> <span class="p">=</span> <span class="s2">"macplus-pcex.rom"</span>
+        <span class="n">address</span> <span class="p">=</span> <span class="m">0xf80000</span>
+        <span class="n">sizes</span> <span class="p">=</span> <span class="m">256</span><span class="n">K</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">scsi</span> <span class="p">{</span>  
+    <span class="n">device</span> <span class="p">{</span>
+        <span class="n">id</span> <span class="p">=</span> <span class="m">0</span>
+        <span class="n">drive</span> <span class="p">=</span> <span class="m">2</span>
+        <span class="n">vendor</span> <span class="p">=</span> <span class="s2">" SEAGATE"</span>
+        <span class="n">product</span> <span class="p">=</span> <span class="s2">"          ST225N"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="n">serial</span> <span class="p">{</span>  
+    <span class="n">port</span> <span class="p">=</span> <span class="m">0</span>
+
+    <span class="n">multichar</span> <span class="p">=</span> <span class="m">1</span>
+
+    <span class="n">driver</span> <span class="p">=</span> <span class="s2">"ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3"</span>
+<span class="p">}</span>
+
+<span class="n">serial</span> <span class="p">{</span>  
+    <span class="n">port</span> <span class="p">=</span> <span class="m">1</span>
+    <span class="n">driver</span> <span class="p">=</span> <span class="s2">"stdio:file=ser_b.out"</span>
+<span class="p">}</span>
+
+
+<span class="n">video</span> <span class="p">{</span>  
+    <span class="n">color0</span> <span class="p">=</span> <span class="m">0x000000</span>
+    <span class="n">color1</span> <span class="p">=</span> <span class="m">0xffffff</span>
+    <span class="n">brightness</span> <span class="p">=</span> <span class="m">1000</span>
+<span class="p">}</span>
+
+
+<span class="n">disk</span> <span class="p">{</span>  
+    <span class="n">drive</span>   <span class="p">=</span> <span class="m">2</span>
+    <span class="n">type</span>    <span class="p">=</span> <span class="s2">"auto"</span>
+    <span class="n">file</span>    <span class="p">=</span> <span class="s2">"hd1.img"</span>
+    <span class="n">optional</span> <span class="p">=</span> <span class="m">0</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I start the emulator with the command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pce-macplus -v -c plus.cfg -r.
+</code></pre></div></div>
+
+<p>Here are the initial console messages. Note <code class="highlighter-rouge">*** can't open driver (ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3)</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Copyright (C) 2007-2012 Hampa Hug &lt;hampa@hampa.ch&gt;  
+CONFIG:   file="plus.cfg"  
+SYSTEM:   model=mac-plus  
+RAM:      addr=0x00000000 size=4194304 file=&lt;none&gt;  
+ROM:      addr=0x00400000 size=262144 file=plus.rom  
+ROM:      addr=0x00f80000 size=65536 file=macplus-pcex.rom  
+RAM:      disabling memory test  
+CPU:      model=68000 speed=0  
+VIA:      addr=0xefe000 size=0x2000  
+SCC:      addr=0x800000 size=0x400000  
+SERIAL:   port=0 multichar=1 driver=ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3  
+*** can't open driver (ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3)
+SERIAL:   port=1 multichar=1 driver=stdio:file=ser_b.out  
+RTC:      file=pram-mac-classic.dat realtime=1 start=&lt;now&gt; romdisk=0  
+KEYBOARD: model=0 international=0 keypad=keypad  
+DISK:     drive=2 type=auto blocks=409600 chs=406/16/63 rw file=hd1.img  
+IWM:      addr=0xd00000  
+SCSI:     addr=0x580000 size=0x80000  
+SCSI:     id=0 drive=2 vendor=" SEAGATE" product="          ST225N"  
+SONY:     drive=1 delay=1  
+SONY:     drive=2 delay=1  
+SONY:     drive=3 delay=1  
+SONY:     drive=4 delay=1  
+SOUND:    addr=0x3FFD00 lowpass=8000 driver=sdl:wav=speaker.wav:lowpass=0:wavfilter=0  
+2017-11-22 01:41:54.029 pce-macplus[12614:133236] 01:41:54.028 WARNING:  140: This application, or a library it uses, is using the deprecated Carbon Component Manager for hosting Audio Units. Support for this will be removed in a future release. Also, this makes the host incompatible with version 3 audio units. Please transition to the API's in AudioComponent.h.  
+TERM:     driver=sdl ESC=ESC aspect=3/2 min_size=512*384 scale=1 mouse=[1/1 1/1]  
+VIDEO:    addr=0x3FA700 w=512 h=342 bright=100%  
+[000000] mac: reset
+[4000D2] main sound buffer
+00400594: undefined operation: 4E7B [4E7B 0002 600C 7201 0C6F]  
+00400594: exception 04 (ILLG) IW=4E7B  
+SONY:     PCE ROM extension at 0xf8001c  
+SONY:     sony driver at 0x417d30  
+SONY:     insert drive 2  
+</code></pre></div></div>
+
+<p>On my code that I cloned from git yesterday (see version in console messages), this appears to have been invoked from <code class="highlighter-rouge">src/arch/macplus/macplus.c</code> on line 826.
+For reference, here is <code class="highlighter-rouge">ifconfig tun0</code>. I just noticed the 8-bit subnet thing, which seems kind of odd:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tun0: flags=8851&lt;UP,POINTOPOINT,RUNNING,SIMPLEX,MULTICAST&gt; mtu 1500  
+    inet 10.10.10.2 --&gt; 10.10.10.255 netmask 0xff000000 
+    open (pid 7286)
+</code></pre></div></div>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">KB3TIX blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              KB3TIX blog
+            
+            </li>
+            
+            <li><a href="mailto:matt@kb3tix.net">matt@kb3tix.net</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/camateg"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">camateg</span></a>
+
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>A small github site to share ideas...</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-28T21:58:10-05:00</updated><id>http://localhost:4000/</id><title type="html">KB3TIX blog</title><subtitle>A small github site to share ideas...</subtitle><entry><title type="html">PCE/macplus with socat</title><link href="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html" rel="alternate" type="text/html" title="PCE/macplus with socat" /><published>2017-11-01T01:00:00-04:00</published><updated>2017-11-01T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">&lt;p&gt;I was able to compile tun support for &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt; Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-28T23:00:17-05:00</updated><id>http://localhost:4000/</id><title type="html">KB3TIX blog</title><subtitle>A small github site to share ideas...</subtitle><entry><title type="html">PCE/macplus with socat</title><link href="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html" rel="alternate" type="text/html" title="PCE/macplus with socat" /><published>2017-11-01T01:00:00-04:00</published><updated>2017-11-01T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">&lt;p&gt;I was able to compile tun support for &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt; Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.&lt;/p&gt;
 
 &lt;p&gt;The &lt;a href=&quot;http://www.toughdev.com/content/2016/11/pcemacplus-the-ultimate-68k-classic-macintosh-emulator/&quot;&gt;original guide&lt;/a&gt; gave me another idea after I re-read it and I actually had a little bit more success with that. Although &lt;a href=&quot;https://github.com/freemed/tty0tty&quot;&gt;tty0tty&lt;/a&gt; relies on a Linux kernel module, another utility called “&lt;a href=&quot;http://www.dest-unreach.org/socat/doc/socat.html&quot;&gt;socat&lt;/a&gt;” runs on a wider range of platforms and is &lt;a href=&quot;http://brewformulas.org/Socat&quot;&gt;available through homebrew&lt;/a&gt; for OS X.&lt;/p&gt;
 
@@ -73,4 +73,291 @@ Thu Nov 23 23:45:11 2017 : Connection terminated.
   &lt;li&gt;initiate a yet to be determined pppd command on the OS X host that includes the tty generated from the socat output&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The last two items could be interchangeable or I might have them backwards, but the “fake success” message was kind of neat to see, even it was a lie.&lt;/p&gt;</content><author><name></name></author><summary type="html">I was able to compile tun support for pce-macplus Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.</summary></entry></feed>
+&lt;p&gt;The last two items could be interchangeable or I might have them backwards, but the “fake success” message was kind of neat to see, even it was a lie.&lt;/p&gt;</content><author><name></name></author><summary type="html">I was able to compile tun support for pce-macplus Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.</summary></entry><entry><title type="html">PCE/macplus and tuntap</title><link href="http://localhost:4000/emu/mac/2017/10/31/pce-macplus-macosx-tun.html" rel="alternate" type="text/html" title="PCE/macplus and tuntap" /><published>2017-10-31T01:00:00-04:00</published><updated>2017-10-31T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/10/31/pce-macplus-macosx-tun</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/10/31/pce-macplus-macosx-tun.html">&lt;p&gt;I just found a 68K Mac emulator that I hadn’t heard of before called &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt;. It appealed to me because vMac doesn’t support serial interfaces or networking and also because Basilisk II doesn’t seem to be as actively maintained as it once was and I have some stability issues on OS X with it.&lt;/p&gt;
+
+&lt;p&gt;The source code is very Linux-centric and not especially well documented, but I found &lt;a href=&quot;http://www.toughdev.com/content/2016/11/pcemacplus-the-ultimate-68k-classic-macintosh-emulator/&quot;&gt;an excellent blog post&lt;/a&gt; which helped immensely with initial compilation and initial configuration, so thanks for that.&lt;/p&gt;
+
+&lt;p&gt;As I said, I was particularly interested in network support, which doesn’t seem to have been successfully accomplished on Mac OS X yet for pce, so naturally I had to try. Admittedly, I don’t have much porting or compiled language development since the early 2000s, but hopefully some of it will come back.&lt;/p&gt;
+
+&lt;p&gt;I’ve been able to compile tun support (on the surface) into pce-macplus on OS X, but haven’t successfully gotten the ppp driver to activate or made a connection. I hope that posting this will help to help propel someone more capable in that direction.&lt;/p&gt;
+
+&lt;p&gt;Networking in pce-macplus is accomplished through a tun/tap interface. Mac OS X supports a sort of tun (but no tap), but is likely very different programatically. The source code for pce is clearly written with Linux in mind (i.e. direct references to the Linux kernel source with no error checking), so I figured I’d try to find something more universal in terms of handling tun:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;src/lib/tun.c:&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    ...
+    #include &amp;lt;linux/if.h&amp;gt;
+    #include &amp;lt;linux/if_tun.h&amp;gt;
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;There is / was a tuntap package for OS X, tuntaposx, but I wasn’t sure if it was still actively maintained or how dependencies would be handled, so I ended up using a Homebrew repackaging of tuntap.&lt;/p&gt;
+
+&lt;p&gt;The tuntap package in particular had be relegated to Homebrew-cask so I used the following commands related to homebrew:
+Install homebrew (you probably already have):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Install homebrew-cask:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew tap caskroom/cask  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Install dependencies:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install sdl libpcap  
+brew cask install tuntap  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We need SDL for the UI because XQuartz is slow and clunky, libpcap (I think; I have to verify that this is necessary) and tuntap.&lt;/p&gt;
+
+&lt;p&gt;The next issue that most people have encountered is hardcoded reference to the Linux kernel sources, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;src/lib/tun.c&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    ...
+    #include &amp;lt;linux/if.h&amp;gt;
+    #include &amp;lt;linux/if_tun.h&amp;gt;
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This obviously doesn’t apply to everyone, particularly to me on a Mac. I ended up putting the following early in &lt;code class=&quot;highlighter-rouge&quot;&gt;tun.c&lt;/code&gt;, more details to come on that later:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#ifdef __APPLE__
+    #ifdef TARGET_OS_MAC
+        #include &amp;lt;net/if.h&amp;gt;
+        #include &amp;lt;net/if_types.h&amp;gt;
+        #include &amp;lt;net/bpf.h&amp;gt;
+
+        #define TUNSETIFF BIOCSETIF
+        #define IFF_TAP IFT_PKTAP
+        #define IFF_TUN APPLE_IF_FAM_TUN
+        #define IFF_NO_PI 0x1000
+    #endif
+#else
+    #include &amp;lt;linux/if.h&amp;gt;
+    #include &amp;lt;linux/if_tun.h&amp;gt;
+#endif
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Basically, this tries to account for the possibility of being on a Mac / Darwin system without breaking the initial intent of including &lt;code class=&quot;highlighter-rouge&quot;&gt;linux/if.h&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;linux/if_tun.h&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;My reference to &lt;code class=&quot;highlighter-rouge&quot;&gt;__APPLE__&lt;/code&gt; appears to be archaic, but it gets the job done temporarily. If you’d like to improve this, &lt;a href=&quot;https://developer.apple.com/library/content/documentation/Porting/Conceptual/PortingUnix/compiling/compiling.html&quot;&gt;this might be a good reference&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;#define&lt;/code&gt; statements are a part that I’m not necessarily sure about. I did my best to determine a one-to-one relationship between Linux and *BSD macros related to tunneling and packet filtering. Take them with a grain of salt. There may also be stray references to hardcoded Linux device names in the pce source code, but I haven’t gotten that far yet.&lt;/p&gt;
+
+&lt;p&gt;My configure command ended up being pretty simple, which was a pleasant surprise. Initially, I specified some additional CFLAGS and LDFLAGS because of the third-party libpcap, but I left them out by accident and things worked anyways. This is what led me to question the need for installing libpcap, but it’s late and I’ll confirm later. Clearly something made me want to install libpcap?&lt;/p&gt;
+
+&lt;p&gt;These are the compiler flags I had added that didn’t seem to matter. They will be empty by default. I actually noticed that additional carriage returns might have been introduced into generated Makefile.inc when I specified these in the configure command, so these are just left as a reference:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export CFLAGS= -I/usr/local/opt/libpcap/include  
+export LDFLAGS= -L/usr/local/opt/libpcap/lib  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Configure your build parameters:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./configure --with-sdl -enable-char-ppp --enable-tun -enable-char-tcp --enable-char-slip --enable-char-pty --enable-char-posix --enable-char-termios
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This results in the following configuration:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pce 20171112-4c256b0-mod is now configured:  
+  CC:                      gcc -g -O2
+  LD:                      gcc 
+
+  prefix:                  /usr/local
+
+  Emulators built:         atarist cpm80 ibmpc macplus rc759 sim405 sim6502 simarm sims32
+  Emulators not built:    
+  ROMs built:             
+  ROMs not built:          ibmpc macplus
+  Terminals built:         null x11 sdl
+  Terminals not built:    
+  Char drivers built:      null stdio posix ppp pty slip tcp termios
+  Char drivers not built:  wincom
+  Sound drivers built:     null wav sdl
+  Sound drivers not built: oss
+  Enabled options:         tun
+  Disabled options:        readline
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I did a make &amp;amp;&amp;amp; make install and fired up a machine. Here is the config file I used, many thanks to the author of the post above:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-.&quot;&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;memtest&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+
+
+&lt;span class=&quot;nf&quot;&gt;system&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;mac-plus&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;68000&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;ram&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;address&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0x00&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;rom&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;plus.rom&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;address&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0x400000&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;system&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;mac-classic&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;512&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;K&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0xff&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;terminal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sdl&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;aspect_x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;aspect_y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;border&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;fullscreen&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;mouse_mul_x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mouse_div_x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mouse_mul_y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mouse_div_y&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sound&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;lowpass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8000&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sdl:wav=speaker.wav:lowpass=0:wavfilter=0&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;keyboard&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;k&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;intl&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;keypad_motion&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;adb&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;mouse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;keyboard&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;keypad_motion&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;rtc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;pram-mac-classic.dat&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;realtime&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;cfg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sony&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;  
+&lt;span class=&quot;n&quot;&gt;sony&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;insert_delay&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cfg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sony&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;rom&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;macplus-pcex.rom&quot;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;address&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0xf80000&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sizes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;scsi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;drive&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;vendor&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; SEAGATE&quot;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;product&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;          ST225N&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;serial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;multichar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;serial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;stdio:file=ser_b.out&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;video&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;color0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0x000000&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;color1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0xffffff&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;brightness&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;disk&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;drive&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;auto&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hd1.img&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I start the emulator with the command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pce-macplus -v -c plus.cfg -r.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here are the initial console messages. Note &lt;code class=&quot;highlighter-rouge&quot;&gt;*** can't open driver (ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3)&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Copyright (C) 2007-2012 Hampa Hug &amp;lt;hampa@hampa.ch&amp;gt;  
+CONFIG:   file=&quot;plus.cfg&quot;  
+SYSTEM:   model=mac-plus  
+RAM:      addr=0x00000000 size=4194304 file=&amp;lt;none&amp;gt;  
+ROM:      addr=0x00400000 size=262144 file=plus.rom  
+ROM:      addr=0x00f80000 size=65536 file=macplus-pcex.rom  
+RAM:      disabling memory test  
+CPU:      model=68000 speed=0  
+VIA:      addr=0xefe000 size=0x2000  
+SCC:      addr=0x800000 size=0x400000  
+SERIAL:   port=0 multichar=1 driver=ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3  
+*** can't open driver (ppp:if=tun0:host-ip=10.10.10.2:guest-ip=10.10.10.3)
+SERIAL:   port=1 multichar=1 driver=stdio:file=ser_b.out  
+RTC:      file=pram-mac-classic.dat realtime=1 start=&amp;lt;now&amp;gt; romdisk=0  
+KEYBOARD: model=0 international=0 keypad=keypad  
+DISK:     drive=2 type=auto blocks=409600 chs=406/16/63 rw file=hd1.img  
+IWM:      addr=0xd00000  
+SCSI:     addr=0x580000 size=0x80000  
+SCSI:     id=0 drive=2 vendor=&quot; SEAGATE&quot; product=&quot;          ST225N&quot;  
+SONY:     drive=1 delay=1  
+SONY:     drive=2 delay=1  
+SONY:     drive=3 delay=1  
+SONY:     drive=4 delay=1  
+SOUND:    addr=0x3FFD00 lowpass=8000 driver=sdl:wav=speaker.wav:lowpass=0:wavfilter=0  
+2017-11-22 01:41:54.029 pce-macplus[12614:133236] 01:41:54.028 WARNING:  140: This application, or a library it uses, is using the deprecated Carbon Component Manager for hosting Audio Units. Support for this will be removed in a future release. Also, this makes the host incompatible with version 3 audio units. Please transition to the API's in AudioComponent.h.  
+TERM:     driver=sdl ESC=ESC aspect=3/2 min_size=512*384 scale=1 mouse=[1/1 1/1]  
+VIDEO:    addr=0x3FA700 w=512 h=342 bright=100%  
+[000000] mac: reset
+[4000D2] main sound buffer
+00400594: undefined operation: 4E7B [4E7B 0002 600C 7201 0C6F]  
+00400594: exception 04 (ILLG) IW=4E7B  
+SONY:     PCE ROM extension at 0xf8001c  
+SONY:     sony driver at 0x417d30  
+SONY:     insert drive 2  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;On my code that I cloned from git yesterday (see version in console messages), this appears to have been invoked from &lt;code class=&quot;highlighter-rouge&quot;&gt;src/arch/macplus/macplus.c&lt;/code&gt; on line 826.
+For reference, here is &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig tun0&lt;/code&gt;. I just noticed the 8-bit subnet thing, which seems kind of odd:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tun0: flags=8851&amp;lt;UP,POINTOPOINT,RUNNING,SIMPLEX,MULTICAST&amp;gt; mtu 1500  
+    inet 10.10.10.2 --&amp;gt; 10.10.10.255 netmask 0xff000000 
+    open (pid 7286)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">I just found a 68K Mac emulator that I hadn’t heard of before called pce-macplus. It appealed to me because vMac doesn’t support serial interfaces or networking and also because Basilisk II doesn’t seem to be as actively maintained as it once was and I have some stability issues on OS X with it.</summary></entry><entry><title type="html">morse2au</title><link href="http://localhost:4000/ruby/dev/radio/2016/11/08/morse2au.html" rel="alternate" type="text/html" title="morse2au" /><published>2016-11-08T00:00:00-05:00</published><updated>2016-11-08T00:00:00-05:00</updated><id>http://localhost:4000/ruby/dev/radio/2016/11/08/morse2au</id><content type="html" xml:base="http://localhost:4000/ruby/dev/radio/2016/11/08/morse2au.html">&lt;p&gt;&lt;a href=&quot;https://rubygems.org/gems/morse2au&quot;&gt;My morse2au Ruby gem&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">My morse2au Ruby gem</summary></entry></feed>
