@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>KB3TIX blog</title>
-  <meta name="description" content="A small github site to share ideas...">
+  <title>OrangePi MacIPGW pppd</title>
+  <meta name="description" content="with the TTL to RS232 converter, use the ground and VCC on the 13 pin header (pin 1 and 2) and only the TX/RX on the 3 pin header. Otherwise, my RS232 board ...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="canonical" href="http://localhost:4000/mac/linux/2018/01/01/orange-pi-pppd.html">
   <link rel="alternate" type="application/rss+xml" title="KB3TIX blog" href="/feed.xml">
   
   
@@ -67,56 +67,65 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OrangePi MacIPGW pppd</h1>
+    <p class="post-meta">
+      <time datetime="2018-01-01T00:00:00-05:00" itemprop="datePublished">
+        
+        Jan 1, 2018
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <ul>
+  <li>with the TTL to RS232 converter, use the ground and VCC on the 13 pin header (pin 1 and 2) and only the TX/RX on the 3 pin header.  Otherwise, my RS232 board got hot…</li>
+  <li>set <code class="highlighter-rouge">console=display</code> in <code class="highlighter-rouge">/boot/armbianEnv.txt</code> to disable the Armbian serial console…</li>
+  <li><code class="highlighter-rouge">apt-get install ppp</code></li>
+  <li>create <code class="highlighter-rouge">/etc/ppp/options.ttyS0</code>:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  noauth
+  asyncmap 0
+  nocrtscts
+  local
+  lock
+  netmask 255.255.255.0
+  passive
+  proxyarp
+  lcp-echo-interval 30
+  lcp-echo-failure 4
+  noipx
+  persist
+</code></pre></div></div>
+
+<ul>
+  <li>create <code class="highlighter-rouge">/etc/systemd/system/pppd-ttyS0.service</code>, possibly making the ExecStop more specific:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=pppd-ttyS0.service
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/pppd 172.16.3.1:172.16.3.2 /dev/ttyS0 57600
+ExecStop=/usr/bin/killall pppd
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<ul>
+  <li>disable any serial-getty services?</li>
+  <li><code class="highlighter-rouge">systemctl enable pppd-ttyS0.servicce</code></li>
+</ul>
+
+  </div>
+
   
-  
-
-
-  <ul class="post-list">
-    
-      <li>
-        
-        <span class="post-meta">Jan 1, 2018</span>
-
-        <h2>
-          <a class="post-link" href="/mac/linux/2018/01/01/orange-pi-pppd.html">OrangePi MacIPGW pppd</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">Nov 1, 2017</span>
-
-        <h2>
-          <a class="post-link" href="/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">PCE/macplus with socat</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">Oct 31, 2017</span>
-
-        <h2>
-          <a class="post-link" href="/emu/mac/2017/10/31/pce-macplus-macosx-tun.html">PCE/macplus and tuntap</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">Nov 8, 2016</span>
-
-        <h2>
-          <a class="post-link" href="/ruby/dev/radio/2016/11/08/morse2au.html">morse2au</a>
-        </h2>
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
-
-</div>
+</article>
 
       </div>
     </main>

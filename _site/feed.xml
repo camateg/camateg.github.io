@@ -1,4 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-12-28T23:00:17-05:00</updated><id>http://localhost:4000/</id><title type="html">KB3TIX blog</title><subtitle>A small github site to share ideas...</subtitle><entry><title type="html">PCE/macplus with socat</title><link href="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html" rel="alternate" type="text/html" title="PCE/macplus with socat" /><published>2017-11-01T01:00:00-04:00</published><updated>2017-11-01T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">&lt;p&gt;I was able to compile tun support for &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt; Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-01T03:48:46-05:00</updated><id>http://localhost:4000/</id><title type="html">KB3TIX blog</title><subtitle>A small github site to share ideas...</subtitle><entry><title type="html">OrangePi MacIPGW pppd</title><link href="http://localhost:4000/mac/linux/2018/01/01/orange-pi-pppd.html" rel="alternate" type="text/html" title="OrangePi MacIPGW pppd" /><published>2018-01-01T00:00:00-05:00</published><updated>2018-01-01T00:00:00-05:00</updated><id>http://localhost:4000/mac/linux/2018/01/01/orange-pi-pppd</id><content type="html" xml:base="http://localhost:4000/mac/linux/2018/01/01/orange-pi-pppd.html">&lt;ul&gt;
+  &lt;li&gt;with the TTL to RS232 converter, use the ground and VCC on the 13 pin header (pin 1 and 2) and only the TX/RX on the 3 pin header.  Otherwise, my RS232 board got hot…&lt;/li&gt;
+  &lt;li&gt;set &lt;code class=&quot;highlighter-rouge&quot;&gt;console=display&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;/boot/armbianEnv.txt&lt;/code&gt; to disable the Armbian serial console…&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get install ppp&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;create &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/ppp/options.ttyS0&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  noauth
+  asyncmap 0
+  nocrtscts
+  local
+  lock
+  netmask 255.255.255.0
+  passive
+  proxyarp
+  lcp-echo-interval 30
+  lcp-echo-failure 4
+  noipx
+  persist
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;create &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/systemd/system/pppd-ttyS0.service&lt;/code&gt;, possibly making the ExecStop more specific:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Unit]
+Description=pppd-ttyS0.service
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/pppd 172.16.3.1:172.16.3.2 /dev/ttyS0 57600
+ExecStop=/usr/bin/killall pppd
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;disable any serial-getty services?&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;systemctl enable pppd-ttyS0.servicce&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">with the TTL to RS232 converter, use the ground and VCC on the 13 pin header (pin 1 and 2) and only the TX/RX on the 3 pin header. Otherwise, my RS232 board got hot… set console=display in /boot/armbianEnv.txt to disable the Armbian serial console… apt-get install ppp create /etc/ppp/options.ttyS0:</summary></entry><entry><title type="html">PCE/macplus with socat</title><link href="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html" rel="alternate" type="text/html" title="PCE/macplus with socat" /><published>2017-11-01T01:00:00-04:00</published><updated>2017-11-01T01:00:00-04:00</updated><id>http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat</id><content type="html" xml:base="http://localhost:4000/emu/mac/2017/11/01/pce-macplus-macosx-socat.html">&lt;p&gt;I was able to compile tun support for &lt;a href=&quot;http://www.hampa.ch/pce/pce-macplus.html&quot;&gt;pce-macplus&lt;/a&gt; Mac OS X 10.11, at least on the surface, after a couple of hours of research. Granted, I haven’t made an Internet connection yet, but I’m hoping that this could be because of my inexperience with tuntap on OS X. I wrote some quick notes in hopes that someone could make use of them and get some actual results.&lt;/p&gt;
 
 &lt;p&gt;The &lt;a href=&quot;http://www.toughdev.com/content/2016/11/pcemacplus-the-ultimate-68k-classic-macintosh-emulator/&quot;&gt;original guide&lt;/a&gt; gave me another idea after I re-read it and I actually had a little bit more success with that. Although &lt;a href=&quot;https://github.com/freemed/tty0tty&quot;&gt;tty0tty&lt;/a&gt; relies on a Linux kernel module, another utility called “&lt;a href=&quot;http://www.dest-unreach.org/socat/doc/socat.html&quot;&gt;socat&lt;/a&gt;” runs on a wider range of platforms and is &lt;a href=&quot;http://brewformulas.org/Socat&quot;&gt;available through homebrew&lt;/a&gt; for OS X.&lt;/p&gt;
 
