@@ -34,7 +34,7 @@ Description=pppd-ttyS0.service
 [Service]
 Type=forking
 ExecStart=/usr/sbin/pppd 172.16.3.1:172.16.3.2 /dev/ttyS0 57600
-ExecStop=/usr/bin/killall pppd
+ExecStop=/usr/bin/kill `pgrep -f "pppd.?.*ttyS0"`
 
 [Install]
 WantedBy=multi-user.target
