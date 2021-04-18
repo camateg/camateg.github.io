@@ -22,6 +22,6 @@ After you've created your Lego masterpiece, I suggest exporting to COLLADA forma
 When that's all done, I scour YouTube for sound effects and you can polish it a bit in terms of video format, timing and other cosmetic things in a video creator of your choice.
 
 
-[![Raceway](https://i.ytimg.com/an_webp/eb5AVRysgfY/mqdefault_6s.webp?du=3000&sqp=CMil7oMG&rs=AOn4CLAJvGJ69rXRjcvvASV4nEn44bnA3w)]
+![Raceway](https://i.ytimg.com/an_webp/eb5AVRysgfY/mqdefault_6s.webp?du=3000&sqp=CMil7oMG&rs=AOn4CLAJvGJ69rXRjcvvASV4nEn44bnA3w)
 
-(https://www.youtube.com/watch?v=eb5AVRysgfY)
+[Raceway](https://www.youtube.com/watch?v=eb5AVRysgfY)
